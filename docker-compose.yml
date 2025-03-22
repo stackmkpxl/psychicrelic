@@ -1,0 +1,32 @@
+version: '3'
+services:
+  # sql-server:
+  #   image: mcr.microsoft.com/mssql/server:latest
+  #   environment:
+  #     ACCEPT_EULA: 'Y'
+  #     SA_PASSWORD: 'yourStrongPassword1'
+  #   ports:
+  #     - 1433:1433
+
+
+  db:
+    image: postgres
+    restart: always
+    # set shared memory limit when using docker-compose
+    shm_size: 128mb
+    # or set shared memory limit when deploy via swarm stack
+    #volumes:
+    #  - type: tmpfs
+    #    target: /dev/shm
+    #    tmpfs:
+    #      size: 134217728 # 128*2^20 bytes = 128Mb
+    environment:
+      POSTGRES_PASSWORD: example
+      POSTGRES_USER: example
+      POSTGRES_DB: exampledb
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
